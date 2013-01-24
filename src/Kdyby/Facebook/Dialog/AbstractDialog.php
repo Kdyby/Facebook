@@ -166,7 +166,7 @@ abstract class AbstractDialog extends PresenterComponent implements Facebook\Dia
 	 */
 	public function getControl($display = NULL, $showError = FALSE)
 	{
-		return Html::el('a')->url($this->getUrl($display, $showError));
+		return Html::el('a')->href($this->getUrl($display, $showError));
 	}
 
 
