@@ -39,7 +39,7 @@ class FacebookExtension extends Nette\Config\CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$config = $this->getConfig($this->defaults);
-		Validators::assert($config['appId'], 'number', 'Application ID');
+		Validators::assert($config['appId'], 'string', 'Application ID');
 		Validators::assert($config['appSecret'], 'string:32', "Application secret");
 		Validators::assert($config['fileUploadSupport'], 'bool', "file upload support");
 		Validators::assert($config['trustForwarded'], 'bool', "trust forwarded");
