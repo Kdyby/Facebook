@@ -86,7 +86,7 @@ class FacebookControl extends Nette\Application\UI\PresenterComponent
 
 		// fetch public url
 		$url = $this->cache->load('profile.picture.' . $id, function (&$dp) use ($fb, $id, $presenter) {
-			$db[Cache::EXPIRE] = '+10 minutes';
+			$dp[Cache::EXPIRE] = '+10 minutes';
 
 			/** @var Facebook $fb */
 			if (!$url = $fb->getProfile($id)->getPictureUrl()) {
