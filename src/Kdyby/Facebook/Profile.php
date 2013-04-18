@@ -110,7 +110,7 @@ class Profile extends Nette\Object
 	public function getPictureUrl()
 	{
 		try {
-			return $this->facebook->api('/' . $this->profileId . '/picture')->url;
+			return $this->facebook->api('/' . $this->profileId . '/picture', NULL, array('redirect' => FALSE,))->data->url;
 
 		} catch (FacebookApiException $e) {
 			return NULL;
