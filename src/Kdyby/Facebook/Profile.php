@@ -103,14 +103,16 @@ class Profile extends Nette\Object
 	}
 
 
-
 	/**
-	 * @return string
+	 * @param array $params
+	 * @return null
 	 */
-	public function getPictureUrl()
+	public function getPictureUrl(array $params = array())
 	{
+		$params = array_merge($params, array('redirect' => false));
+
 		try {
-			return $this->facebook->api('/' . $this->profileId . '/picture', NULL, array('redirect' => FALSE,))->data->url;
+			return $this->facebook->api('/' . $this->profileId . '/picture', NULL, $params)->data->url;
 
 		} catch (FacebookApiException $e) {
 			return NULL;
