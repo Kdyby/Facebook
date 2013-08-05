@@ -180,6 +180,22 @@ class Facebook extends Nette\Object
 
 
 	/**
+	 * Make an API call.
+	 *
+	 * @param string|array $pathOrParams
+	 * @param string $method
+	 * @param array $params
+	 * @throws \Kdyby\Facebook\FacebookApiException
+	 * @return \Kdyby\Facebook\Resource\ResourceLoader
+	 */
+	public function iterate($pathOrParams, $method = NULL, array $params = array())
+	{
+		return new Resource\ResourceLoader($this, $pathOrParams, $method, $params);
+	}
+
+
+
+	/**
 	 * Get the UID of the connected user, or 0 if the Facebook user is not connected.
 	 *
 	 * @return string the UID if available.

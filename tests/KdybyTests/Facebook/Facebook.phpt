@@ -12,6 +12,7 @@ namespace KdybyTests\Facebook;
 
 use Kdyby;
 use Kdyby\Facebook\FacebookApiException;
+use Kdyby\Facebook\Resource\ResourceLoader;
 use KdybyTests;
 use Nette;
 use Nette\Application\Routers\Route;
@@ -338,6 +339,16 @@ class FacebookTest extends KdybyTests\FacebookTestCase
 			// means the server got the access token and didn't like it
 			Assert::match('OAuthException: 190: Error validating access token: %a%', (string) $e);
 		}
+	}
+
+
+
+	public function testIteratePublicData()
+	{
+		$facebook = $this->createWithRequest();
+
+		$posts = $facebook->iterate('/jerry/posts');
+		Assert::true($posts instanceof ResourceLoader);
 	}
 
 
