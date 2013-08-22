@@ -113,7 +113,7 @@ class LoginPresenter extends BasePresenter
 			}
 
 			/**
-			 * If we get here, it meas that the user was recognized
+			 * If we get here, it means that the user was recognized
 			 * and we can call the Facebook API
 			 */
 
