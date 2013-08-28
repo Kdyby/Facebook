@@ -48,6 +48,13 @@ class ConfigurationTest extends TestCase
 
 
 
+	public function testAppSecretProof() 
+	{
+		Assert::equal('e87be160723b0a7d7b3558cad3c3e869c27f164b71119deace137fb592aa1f19', $this->config->getAppSecretProof("token"));
+	}
+
+
+
 	public function testCreateUrl()
 	{
 		Assert::equal('https://api.facebook.com/me?feed=me', (string) $this->config->createUrl('api', 'me', array('feed' => 'me')));

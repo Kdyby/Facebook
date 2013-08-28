@@ -334,4 +334,18 @@ class Configuration extends Nette\Object
 		return $this->createUrl($name, 'restserver.php');
 	}
 
+	/**
+	 * Generate a proof of App Secret
+	 * This is required for all API calls originating from a server
+	 * It is a sha256 hash of the access_token made using the app secret
+	 *
+	 * @param string $accessToken The access_token to be hashed (required)
+	 *
+	 * @return string The sha256 hash of the access_token
+	 */
+	public function getAppSecretProof($accessToken)
+	{
+		return hash_hmac('sha256', $accessToken, $this->appSecret);
+	}
+
 }
