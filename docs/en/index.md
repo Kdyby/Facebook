@@ -131,7 +131,7 @@ class LoginPresenter extends BasePresenter
 			try {
 				$me = $fb->api('/me');
 
-				if (!$existing = $this->usersModel->findByFacebookId($fb->getUser())) {
+				if ( ! $existing = $this->usersModel->findByFacebookId($fb->getUser())) {
 					/**
 					 * Variable $me contains all the public information about the user
 					 * including facebook id, name and email, if he allowed you to see it.
