@@ -43,11 +43,14 @@ class ResourceLoader extends Object implements IteratorAggregate, IResourceLoade
 	 * @var array
 	 */
 	private $params = array();
+	
+	private $accessToken;
 
 	/**
 	 * @var ArrayHash|NULL
 	 */
 	private $lastResult = NULL;
+	private $totalLoaded = 0;
 
 
 
@@ -59,12 +62,13 @@ class ResourceLoader extends Object implements IteratorAggregate, IResourceLoade
 	 * @param string|NULL $method
 	 * @param array $params
 	 */
-	public function __construct(Facebook $facebook, $pathOrParams, $method = NULL, array $params = array())
+	public function __construct(Facebook $facebook, $pathOrParams, $method = NULL, array $params = array(), $accessToken = NULL)
 	{
 		$this->facebook = $facebook;
 		$this->pathOrParams = $pathOrParams;
 		$this->method = $method;
 		$this->params = $params;
+		$this->accessToken = $accessToken;
 	}
 
 
@@ -157,13 +161,26 @@ class ResourceLoader extends Object implements IteratorAggregate, IResourceLoade
 	private function load()
 	{
 		if ($this->lastResult === NULL) {
-			$this->lastResult = $this->facebook->api($this->pathOrParams, $this->method, $this->params);
+			$this->lastResult = $this->callApi($this->pathOrParams, $this->method, $this->params);
 		} elseif ($this->hasNextPage()) {
-			$this->lastResult = $this->facebook->api($this->getNextPath());
-		}
+			$this->lastResult = $this->callApi($this->getNextPath());
+		}else
+			$this->lastResult = NULL;
+		
+		if($this->lastResult !== NULL)
+			$this->totalLoaded += count($this->lastResult->data);
 	}
-
-
+	
+	private function callApi($path, $method, $params){
+		if($this->accessToken){
+			$curToken = $this->facebook->getAccessToken();
+			$this->facebook->setAccessToken($this->accessToken);	
+		}
+		$ret = $this->facebook->api($path, $method, $params);
+		if(isset($curToken))
+			$this->facebook->setAccessToken($curToken);
+		return $ret;
+	}
 
 	/**
 	 * Checks if list has next page.
@@ -172,6 +189,8 @@ class ResourceLoader extends Object implements IteratorAggregate, IResourceLoade
 	 */
 	private function hasNextPage()
 	{
+		if($this->totalLoaded >= $this->getLimit())
+			return false;
 		return !empty($this->lastResult->paging->next);
 	}
 
@@ -197,7 +216,6 @@ class ResourceLoader extends Object implements IteratorAggregate, IResourceLoade
 	public function getNextPage()
 	{
 		$this->load();
-
 		return $this->lastResult ? $this->lastResult->data : ArrayHash::from(array());
 	}
 
