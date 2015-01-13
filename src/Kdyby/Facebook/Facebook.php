@@ -647,4 +647,31 @@ class Facebook extends Nette\Object
 		return $default;
 	}
 
+    /**
+     * Check if needed permissions is still actual
+     *
+     * @throws \Kdyby\Facebook\FacebookApiException
+     * @return bool
+     */
+    public function checkPermissions(){
+        if (empty($this->config->permissions)) return true; // We needed nothing...
+        // Load actual permissions
+        $loadedPermissions = $this->api("/me/permissions");
+        // No valid response
+        if (!is_array($loadedPermissions) || !isset($loadedPermissions["data"]) || !is_array($loadedPermissions["data"]))
+            return false;
+        $loaded = array();
+        // Iterate over loaded perms. and store it to simple array
+        foreach($loadedPermissions["data"] as $fbPermission){
+            if ($fbPermission["status"] == "granted")
+                $loaded[] = $fbPermission["permission"];
+        }
+        // Iterate over configured perms. and check if is in array with loaded perms.
+        foreach($this->config->permissions as $permission){
+            if (!in_array($permission, $loaded)) return false; // this perm is not in loaded perms.
+        }
+        // All is OK
+        return true;
+    }
+
 }
