@@ -69,7 +69,7 @@ abstract class AbstractDialog extends PresenterComponent implements Facebook\Dia
 		$this->config = $facebook->config;
 		$this->currentUrl = $facebook->getCurrentUrl();
 
-		$this->monitor('Nette\Application\IPresenter');
+		$this->monitor('Nette\Application\UI\Presenter');
 		parent::__construct();
 	}
 
@@ -92,7 +92,7 @@ abstract class AbstractDialog extends PresenterComponent implements Facebook\Dia
 	{
 		parent::attached($obj);
 
-		if ($obj instanceof Nette\Application\IPresenter) {
+		if ($obj instanceof Nette\Application\UI\Presenter) {
 			$this->currentUrl = new UrlScript($this->link('//response!'));
 		}
 	}
