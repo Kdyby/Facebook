@@ -170,6 +170,9 @@ class Facebook extends Nette\Object
 			$response = $this->apiClient->restServer($pathOrParams); // params
 
 		} else {
+			if (strpos($pathOrParams, '?') !== FALSE) {
+				trigger_error('You cannot send query parameters as part of path. Call api() with third parameter instead.', E_USER_ERROR);
+			}
 			$response = $this->apiClient->graph($pathOrParams, $method, $params);
 		}
 
