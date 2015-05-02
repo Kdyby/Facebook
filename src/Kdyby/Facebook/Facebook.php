@@ -189,7 +189,7 @@ class Facebook extends Nette\Object
 	 */
 	public function iterate($pathOrParams, $method = NULL, array $params = array())
 	{
-		return new Resource\ResourceLoader($this, $pathOrParams, $method, $params);
+		return new Resource\ResourceLoader($this, $pathOrParams, $method, $params, $this->getAccessToken());
 	}
 
 

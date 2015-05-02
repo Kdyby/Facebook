@@ -43,6 +43,11 @@ class ResourceLoader extends Object implements IteratorAggregate, IResourceLoade
 	 * @var array
 	 */
 	private $params = array();
+	
+	/**
+	* @var string|NULL
+	*/
+	private $accessToken;
 
 	/**
 	 * @var ArrayHash|NULL
@@ -59,12 +64,13 @@ class ResourceLoader extends Object implements IteratorAggregate, IResourceLoade
 	 * @param string|NULL $method
 	 * @param array $params
 	 */
-	public function __construct(Facebook $facebook, $pathOrParams, $method = NULL, array $params = array())
+	public function __construct(Facebook $facebook, $pathOrParams, $method = NULL, array $params = array(), $accessToken = NULL)
 	{
 		$this->facebook = $facebook;
 		$this->pathOrParams = $pathOrParams;
 		$this->method = $method;
 		$this->params = $params;
+		$this->accessToken = $accessToken;
 	}
 
 
@@ -156,11 +162,27 @@ class ResourceLoader extends Object implements IteratorAggregate, IResourceLoade
 	 */
 	private function load()
 	{
-		if ($this->lastResult === NULL) {
-			$this->lastResult = $this->facebook->api($this->pathOrParams, $this->method, $this->params);
-		} elseif ($this->hasNextPage()) {
-			$this->lastResult = $this->facebook->api($this->getNextPath());
+		if ($this->lastResult === NULL) 
+			$this->lastResult = $this->callApi($this->pathOrParams, $this->method, $this->params);
+		elseif ($this->hasNextPage()) 
+			$this->lastResult = $this->callApi($this->getNextPath());
+		else
+			$this->lastResult = NULL;
+	}
+	
+	private function callApi($path, $method = NULL, $params = []){
+		if($this->accessToken){
+			$curToken = $this->facebook->getAccessToken();
+			$this->facebook->setAccessToken($this->accessToken);	
 		}
+		$limit = $this->getLimit();
+		if($limit)
+			$params['limit'] = $limit;
+			
+		$ret = $this->facebook->api($path, $method, $params);
+		if(isset($curToken))
+			$this->facebook->setAccessToken($curToken);
+		return $ret;
 	}
 
 
