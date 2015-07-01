@@ -103,14 +103,20 @@ class FacebookExtension extends Nette\DI\CompilerExtension
 			$apiClient->addSetup($this->prefix('@panel') . '::register', array('@self'));
 		}
 
+		$builder->addDefinition($this->prefix('synchronizeUserFacebook'))
+			->setClass('Kdyby\Facebook\SynchronizeUserFacebook')
+			->addTag('run')
+			->setAutowired(FALSE)
+			->setInject(FALSE);
+
 		$builder->addDefinition($this->prefix('client'))
 			->setClass('Kdyby\Facebook\Facebook')
 			->setInject(FALSE);
 
 		if ($config['clearAllWithLogout']) {
 			$builder->getDefinition('user')
-				->addSetup('$sl = ?; ?->onLoggedOut[] = function () use ($sl) { $sl->getService(?)->clearAll(); }', array(
-					'@container', '@self', $this->prefix('session')
+				->addSetup('$sl = ?; ?->onLoggedOut[] = function () use ($sl) { $sl->getService(?)->syncFacebookSession(); }', array(
+					'@container', '@self', $this->prefix('synchronizeUserFacebook')
 				));
 		}
 	}

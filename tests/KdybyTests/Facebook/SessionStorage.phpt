@@ -98,6 +98,16 @@ class SessionStorageTest extends KdybyTests\Facebook\FacebookTestCase
 		Assert::false($this->session->state);
 	}
 
+
+
+	public function testLoginLogout()
+	{
+		Assert::false($this->session->checkLogout());
+		$this->session->login();
+		Assert::true($this->session->checkLogout());
+		Assert::false($this->session->checkLogout());
+	}
+
 }
 
 KdybyTests\run(new SessionStorageTest());
