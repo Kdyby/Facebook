@@ -13,6 +13,7 @@ namespace Kdyby\Facebook;
 use Kdyby\Facebook\Api\CurlClient;
 use Nette;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Json;
 
 
 
@@ -267,7 +268,7 @@ class Facebook extends Nette\Object
 				return FALSE;
 			}
 
-			parse_str($response, $params);
+			$params = Json::decode($response, Json::FORCE_ARRAY);
 			if (!isset($params['access_token'])) {
 				return FALSE;
 			}
