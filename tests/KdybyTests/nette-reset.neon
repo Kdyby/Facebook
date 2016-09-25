@@ -1,28 +1,18 @@
-common:
-	php:
-		date.timezone: Europe/Prague
+php:
+	date.timezone: Europe/Prague
 
-	extensions:
-		fakeSession: Kdyby\FakeSession\DI\FakeSessionExtension
+extensions:
+	fakeSession: Kdyby\FakeSession\DI\FakeSessionExtension
 
-	fakeSession:
-		enabled: yes
+fakeSession:
+	enabled: yes
 
-	services:
-		cacheStorage:
-			class: Nette\Caching\Storages\MemoryStorage
+http:
+	frames: null
 
-v22 < common:
-	nette:
-		security:
-			frames: null
+services:
+	cacheStorage:
+		class: Nette\Caching\Storages\MemoryStorage
 
-		session:
-			autoStart: false
-
-v23 < common:
-	http:
-		frames: null
-
-	session:
-		autoStart: false
+session:
+	autoStart: false

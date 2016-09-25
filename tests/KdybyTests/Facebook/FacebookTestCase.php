@@ -68,8 +68,8 @@ abstract class FacebookTestCase extends Tester\TestCase
 		$config = new Nette\Configurator();
 		$config->setTempDirectory(TEMP_DIR);
 		Kdyby\Facebook\DI\FacebookExtension::register($config);
-		$config->addConfig(__DIR__ . '/files/' . $fbConfig, $config::NONE);
-		$config->addConfig(__DIR__ . '/../nette-reset.neon', !isset($config->defaultExtensions['nette']) ? 'v23' : 'v22');
+		$config->addConfig(__DIR__ . '/files/' . $fbConfig);
+		$config->addConfig(__DIR__ . '/../nette-reset.neon');
 
 		/** @var \Nette\DI\Container|\SystemContainer $dic */
 		$dic = $config->createContainer();

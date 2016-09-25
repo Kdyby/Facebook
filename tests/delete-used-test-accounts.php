@@ -15,8 +15,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $config = new Nette\Configurator();
 $config->setTempDirectory(__DIR__ . '/tmp');
 Kdyby\Facebook\DI\FacebookExtension::register($config);
-$config->addConfig(__DIR__ . '/KdybyTests/Facebook/files/config.kdyby.neon', $config::NONE);
-$config->addConfig(__DIR__ . '/KdybyTests/nette-reset.neon', !isset($config->defaultExtensions['nette']) ? 'v23' : 'v22');
+$config->addConfig(__DIR__ . '/KdybyTests/Facebook/files/config.kdyby.neon');
+$config->addConfig(__DIR__ . '/KdybyTests/nette-reset.neon');
 
 /** @var \Nette\DI\Container $container */
 $container = $config->createContainer();
