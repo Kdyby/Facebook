@@ -291,7 +291,7 @@ class Facebook_v2_1Test extends FacebookTestCase
 		$facebook = $this->createWithRequest();
 
 		// use the bundled cert from the start
-		$this->apiClient->curlOptions[CURLOPT_CAINFO] = Kdyby\CurlCaBundle\CertificateHelper::getCaInfoFile();
+		$this->apiClient->curlOptions[CURLOPT_CAINFO] = \Composer\CaBundle\CaBundle::getBundledCaBundlePath();
 		$response = $facebook->api('/' . $this->testUser2->id);
 		Assert::same((string) $this->testUser2->id, $response['id']); // should get expected id.
 	}

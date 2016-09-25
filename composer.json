@@ -21,7 +21,7 @@
 		"nette/di": "~2.3@dev",
 		"nette/http": "~2.3@dev",
 
-		"kdyby/curl-ca-bundle": "~1.0",
+		"composer/ca-bundle": "~1.0",
 		"ext-curl": "*",
 		"ext-json": "*"
 	},
