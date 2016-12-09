@@ -15,7 +15,7 @@ Requirements
 Kdyby/Facebook requires PHP 5.3.2 or higher with cUrl extension enabled.
 
 - [Nette Framework](https://github.com/nette/nette)
-- [Kdyby/CurlCaBundle](https://github.com/Kdyby/CurlCaBundle)
+- [Composer/CaBundle](https://github.com/composer/ca-bundle)
 
 
 Installation
