@@ -70,6 +70,32 @@ class SessionStorage extends Nette\Object
 
 
 	/**
+	 * Login state, if change state from login to logout.
+	 *
+	 * @return bool
+	 */
+	public function checkLogout()
+	{
+		if ($this->session->login === TRUE) {
+			$this->session->login = FALSE;
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+
+
+	/**
+	 * Remember user is login.
+	 */
+	public function login()
+	{
+		$this->session->login = TRUE;
+	}
+
+
+
+	/**
 	 * Stores the given ($key, $value) pair, so that future calls to
 	 * getPersistentData($key) return $value. This call may be in another request.
 	 *
