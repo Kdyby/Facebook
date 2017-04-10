@@ -10,7 +10,7 @@
 
 namespace Kdyby\Facebook\Api;
 
-use Kdyby\CurlCaBundle\CertificateHelper;
+use Composer\CABundle;
 use Kdyby\Facebook;
 use Nette;
 use Tracy\Debugger;
@@ -300,8 +300,8 @@ class CurlClient extends Nette\Object implements Facebook\ApiClient
 		// provide certificate if needed
 		if (curl_errno($ch) == CURLE_SSL_CACERT || curl_errno($ch) === CURLE_SSL_CACERT_BADFILE) {
 			Debugger::log('Invalid or no certificate authority found, using bundled information', 'facebook');
-			$this->curlOptions[CURLOPT_CAINFO] = CertificateHelper::getCaInfoFile();
-			curl_setopt($ch, CURLOPT_CAINFO, CertificateHelper::getCaInfoFile());
+			$this->curlOptions[CURLOPT_CAINFO] = CaBundle\CaBundle::getBundledCaBundlePath();
+			curl_setopt($ch, CURLOPT_CAINFO, CaBundle\CaBundle::getBundledCaBundlePath());
 			$result = curl_exec($ch);
 		}
 
