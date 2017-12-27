@@ -12,7 +12,7 @@ namespace Kdyby\Facebook\Resource;
 
 use Iterator;
 use IteratorIterator;
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\ArrayHash;
 
 
@@ -20,9 +20,9 @@ use Nette\Utils\ArrayHash;
 /**
  * @author Martin Štekl <martin.stekl@gmail.com>
  */
-class ResourceIterator extends Object implements Iterator
+class ResourceIterator implements Iterator
 {
-
+    use SmartObject;
 	/**
 	 * @var \Kdyby\Facebook\Resource\IResourceLoader
 	 */

@@ -12,7 +12,7 @@ namespace Kdyby\Facebook\Resource;
 
 use IteratorAggregate;
 use Kdyby\Facebook\Facebook;
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\ArrayHash;
 use Traversable;
 
@@ -21,8 +21,9 @@ use Traversable;
 /**
  * @author Martin Štekl <martin.stekl@gmail.com>
  */
-class ResourceLoader extends Object implements IteratorAggregate, IResourceLoader
+class ResourceLoader implements IteratorAggregate, IResourceLoader
 {
+    use SmartObject;
 
 	/**
 	 * @var \Kdyby\Facebook\Facebook

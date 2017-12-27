@@ -29,8 +29,9 @@ use Nette\Utils\ArrayHash;
  *
  * @author Naitik Shah <naitik@facebook.com>
  */
-class Facebook extends Nette\Object
+class Facebook
 {
+    use Nette\SmartObject;
 
 	/**
 	 * Version.
