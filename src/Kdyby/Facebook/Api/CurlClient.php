@@ -31,8 +31,9 @@ if (!defined('CURLE_SSL_CACERT_BADFILE')) {
  * @method onError(\Kdyby\Facebook\Exception $e, array $info)
  * @method onSuccess(array $result, array $info)
  */
-class CurlClient extends Nette\Object implements Facebook\ApiClient
+class CurlClient implements Facebook\ApiClient
 {
+    use Nette\SmartObject;
 
 	/**
 	 * Default options for curl.

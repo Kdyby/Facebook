@@ -18,8 +18,9 @@ use Nette\Http\UrlScript;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class Configuration extends Nette\Object
+class Configuration
 {
+    use Nette\SmartObject;
 
 	/** @deprecated */
 	const USER_EMAIL = 'email';

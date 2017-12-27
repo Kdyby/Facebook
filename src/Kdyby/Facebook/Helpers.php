@@ -19,8 +19,9 @@ use Nette\Utils\Strings;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class Helpers extends Nette\Object
+class Helpers
 {
+    use Nette\SmartObject;
 
 	/**
 	 * Return true if this is video post.

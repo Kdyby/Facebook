@@ -23,8 +23,9 @@ use Tracy\Debugger;
  * @property string $access_token
  * @property string $user_id
  */
-class SessionStorage extends Nette\Object
+class SessionStorage
 {
+    use Nette\SmartObject;
 
 	const FBSS_COOKIE_NAME = 'fbss';
 

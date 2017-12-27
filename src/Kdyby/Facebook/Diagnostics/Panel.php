@@ -26,8 +26,9 @@ use Tracy\IBarPanel;
  * @property callable $failure
  * @property callable $success
  */
-class Panel extends Nette\Object implements IBarPanel
+class Panel implements IBarPanel
 {
+    use Nette\SmartObject;
 
 	/**
 	 * @var int logged time
@@ -165,9 +166,9 @@ class Panel extends Nette\Object implements IBarPanel
 	 */
 	public function register(CurlClient $client)
 	{
-		$client->onRequest[] = $this->begin;
-		$client->onError[] = $this->failure;
-		$client->onSuccess[] = $this->success;
+		$client->onRequest[] = [$this, 'begin'];
+		$client->onError[] = [$this, 'failure'];
+		$client->onSuccess[] = [$this, 'success'];
 
 		Debugger::getBar()->addPanel($this);
 	}

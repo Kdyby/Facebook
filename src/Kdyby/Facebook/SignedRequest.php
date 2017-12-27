@@ -20,8 +20,9 @@ use Nette\Utils\Json;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class SignedRequest extends Nette\Object
+class SignedRequest
 {
+    use Nette\SmartObject;
 
 	/**
 	 * Parses a signed_request and validates the signature.
