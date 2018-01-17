@@ -119,16 +119,17 @@ class Profile extends Nette\Object
 
 		return $this->details;
 	}
+
     /**
-     * @param string $key
+     * @param array $keys
      * @return ArrayHash|NULL
      */
-    public function getDetail($key = NULL)
+    public function getDetail($keys = ["name"])
     {
         if ($this->details === NULL) {
             try {
                 $this->details = $this->facebook->api('/' . $this->profileId,NULL,[
-                    "fields" => $key
+                    "fields" => join(",",$keys)
                 ]);
 
             } catch (FacebookApiException $e) {
