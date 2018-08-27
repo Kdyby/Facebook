@@ -92,7 +92,9 @@ abstract class AbstractDialog extends PresenterComponent implements Facebook\Dia
 		parent::attached($obj);
 
 		if ($obj instanceof Nette\Application\UI\Presenter) {
-			$this->currentUrl = new UrlScript($this->link('//response!'));
+			$parameters = $this->currentUrl->getQueryParameters();
+			unset($parameters['do']);
+			$this->currentUrl = new UrlScript($this->link('//response!', $parameters));
 		}
 	}
 
