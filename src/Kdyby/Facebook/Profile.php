@@ -41,6 +41,37 @@ class Profile
 	 * @var ArrayHash
 	 */
 	private $details;
+	private $fields = [
+	    "address",
+        "name",
+        "age_range",
+        "birthday",
+        "about",
+        "gender",
+        "cover",
+        "devices",
+        "education",
+        "first_name",
+        "hometown",
+        "inspirational_people",
+        "interested_in",
+        "languages",
+        "last_name",
+        "link",
+        "locale",
+        "location",
+        "meeting_for",
+        "middle_name",
+        "name",
+        "name_format",
+        "profile_pic",
+        "relationship_status",
+        "religion",
+        "short_name",
+        "sports",
+        "website",
+        "work"
+    ];
 
 
 
@@ -71,26 +102,49 @@ class Profile
 
 
 	/**
+     * Get all details that you can with /me profile
 	 * @param string $key
 	 * @return ArrayHash|NULL
 	 */
-	public function getDetails($key = NULL)
+	public function getDetails()
 	{
 		if ($this->details === NULL) {
 			try {
-				$this->details = $this->facebook->api('/' . $this->profileId);
+				$this->details = $this->facebook->api('/' . $this->profileId,NULL,[
+				    "fields" => join(",",$this->fields)
+                ]);
 
 			} catch (FacebookApiException $e) {
 				$this->details = new ArrayHash;
 			}
 		}
 
-		if ($key !== NULL) {
-			return isset($this->details[$key]) ? $this->details[$key] : NULL;
-		}
-
 		return $this->details;
 	}
+
+    /**
+     * @param array $keys
+     * @return ArrayHash|NULL
+     */
+    public function getDetail($keys = ["name"])
+    {
+        if ($this->details === NULL) {
+            try {
+                $this->details = $this->facebook->api('/' . $this->profileId,NULL,[
+                    "fields" => join(",",$keys)
+                ]);
+
+            } catch (FacebookApiException $e) {
+                $this->details = [];
+            }
+        }
+
+        if ($key !== NULL) {
+            return isset($this->details[$key]) ? $this->details[$key] : NULL;
+        }
+
+        return $this->details;
+    }
 
 
 
